@@ -1,106 +1,112 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "@/assets/kritunga-logo.png";
 
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Ambience", href: "#ambience" },
   { label: "Menu", href: "/menu", isRoute: true },
   { label: "Locations", href: "#locations" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact", isRoute: true },
 ];
 
-const Navbar = () => {
+export default function Navbar() {
+
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("home");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const handleScroll = () => {
+
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollProgress = scrollTop / docHeight;
+
+      setProgress(scrollProgress);
+      setScrolled(scrollTop > 40);
+
+      const sections = ["home", "about", "ambience", "locations", "contact"];
+
+      sections.forEach((sec) => {
+        const el = document.getElementById(sec);
+        if (!el) return;
+
+        const top = el.offsetTop - 120;
+        const bottom = top + el.offsetHeight;
+
+        if (scrollTop >= top && scrollTop < bottom) {
+          setActive(sec);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-[var(--shadow-warm)]"
+    <>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] bg-primary z-[70]"
+        style={{ scaleX: progress, transformOrigin: "0%" }}
+      />
+
+      <motion.nav
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+          ? "bg-background/70 backdrop-blur-xl shadow-2xl border-b border-white/10"
           : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <a href="#home" className="flex items-center gap-3">
-            <img src={logo} alt="Kritunga" className="h-14 w-14 object-contain" />
-            <div className={`transition-colors duration-300 ${scrolled ? "text-primary" : "text-primary-foreground"}`}>
-              <span className="font-display text-xl font-bold tracking-wide">KRITUNGA</span>
-              <p className="text-[10px] font-heading tracking-[0.3em] uppercase opacity-80">The Rayalaseema Cuisine</p>
-            </div>
-          </a>
+          }`}
+      >
 
-          {/* Desktop */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) =>
-              (link as any).isRoute ? (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
-                    scrolled ? "text-foreground" : "text-primary-foreground"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
-                    scrolled ? "text-foreground" : "text-primary-foreground"
-                  }`}
-                >
-                  {link.label}
-                </a>
-              )
-            )}
-            <a
-              href="tel:+919908093970"
-              className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-sm font-body text-sm font-bold tracking-wider hover:bg-maroon-dark transition-colors"
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+
+            {/* Logo */}
+            <motion.a
+              href="#home"
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center gap-3"
             >
-              <Phone className="w-4 h-4" />
-              Reserve
-            </a>
-          </div>
+              <img
+                src={logo}
+                alt="Kritunga"
+                className="h-14 w-14 object-contain"
+              />
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 ${scrolled ? "text-foreground" : "text-primary-foreground"}`}
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
+              <div
+                className={`transition-colors ${scrolled ? "text-primary" : "text-white"
+                  }`}
+              >
+                <span className="font-display text-xl font-bold">
+                  KRITUNGA
+                </span>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background/98 backdrop-blur-md border-t border-border"
-          >
-            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+                <p className="text-[10px] tracking-[0.3em] uppercase opacity-70">
+                  Rayalaseema Cuisine
+                </p>
+              </div>
+            </motion.a>
+
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex items-center gap-10 relative">
+
               {navLinks.map((link) =>
-                (link as any).isRoute ? (
+                link.isRoute ? (
                   <Link
                     key={link.href}
                     to={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
+                    className="relative text-lg font-medium hover:text-primary transition"
                   >
                     {link.label}
                   </Link>
@@ -108,26 +114,107 @@ const Navbar = () => {
                   <a
                     key={link.href}
                     href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
+                    className={`relative text-lg font-medium transition ${active === link.href.replace("#", "")
+                      ? "text-primary"
+                      : "hover:text-primary"
+                      }`}
                   >
                     {link.label}
+
+                    {/* animated underline */}
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute left-0 -bottom-1 h-[2px] bg-primary"
+                      initial={{ width: 0 }}
+                      animate={{
+                        width:
+                          active === link.href.replace("#", "")
+                            ? "100%"
+                            : "0%",
+                      }}
+                      transition={{ duration: 0.3 }}
+                    />
                   </a>
                 )
               )}
-              <a
-                href="tel:+919908093970"
-                className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-5 py-3 rounded-sm font-body text-sm font-bold tracking-wider"
-              >
-                <Phone className="w-4 h-4" />
-                Reserve a Table
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
-  );
-};
 
-export default Navbar;
+              {/* Reservation Button */}
+              <motion.a
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0px 10px 30px rgba(255,80,0,0.5)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                href="tel:+919640059577"
+                className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-semibold"
+              >
+                <Phone size={16} />
+                Reserve
+              </motion.a>
+
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="lg:hidden"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
+
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden bg-background/95 backdrop-blur-xl border-t"
+            >
+
+              <div className="flex flex-col items-center py-10 gap-7 text-lg">
+
+                {navLinks.map((link) =>
+                  link.isRoute ? (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="hover:text-primary"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="hover:text-primary"
+                    >
+                      {link.label}
+                    </a>
+                  )
+                )}
+
+                <a
+                  href="tel:+919640059577"
+                  className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-md"
+                >
+                  <Phone size={16} />
+                  Reserve Table
+                </a>
+
+              </div>
+
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+      </motion.nav>
+    </>
+  );
+}

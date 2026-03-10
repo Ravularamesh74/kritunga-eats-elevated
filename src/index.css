@@ -7,10 +7,10 @@
 @layer base {
   :root {
     --background: 33 55% 96%;
-    --foreground: 15 30% 15%;
+    --foreground: 15 35% 10%;
 
     --card: 33 40% 93%;
-    --card-foreground: 15 30% 15%;
+    --card-foreground: 15 35% 10%;
 
     --popover: 33 55% 96%;
     --popover-foreground: 15 30% 15%;
@@ -22,7 +22,7 @@
     --secondary-foreground: 15 30% 15%;
 
     --muted: 33 30% 90%;
-    --muted-foreground: 15 15% 45%;
+    --muted-foreground: 15 20% 30%;
 
     --accent: 30 80% 50%;
     --accent-foreground: 15 30% 10%;
@@ -76,11 +76,15 @@
     font-family: var(--font-body);
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: var(--font-display);
   }
 
-  h4, h5, h6 {
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
   }
 }

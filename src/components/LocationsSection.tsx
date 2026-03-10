@@ -1,122 +1,145 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MapPin, Clock, Phone, Star } from "lucide-react";
+import { MapPin, Clock, Phone, Navigation } from "lucide-react";
 
-const locations = [
-  {
-    city: "Madhapur",
-    address: "Main Road, Madhapur, Hyderabad",
-    phone: "+91 99080 93970",
-    hours: "12:30 PM – 11:00 PM",
-    rating: 3.6,
-    priceForTwo: "₹1,000",
-  },
-  {
-    city: "Panjagutta",
-    address: "Near Model House, Erramanzil, Panjagutta, Hyderabad",
-    phone: "+91 40 6682 2550",
-    hours: "7:00 PM – 11:00 PM",
-    rating: 4.1,
-    priceForTwo: "₹700",
-  },
-  {
-    city: "Kukatpally",
-    address: "3rd Floor, PNR Empire, KPHB Main Road, Kukatpally, Hyderabad",
-    phone: "+91 40 6682 2555",
-    hours: "11:30 AM – 11:00 PM",
-    rating: 3.8,
-    priceForTwo: "₹800",
-  },
-  {
-    city: "Kismatpur",
-    address: "SY NO.104-106, Kismatpur Rd, beside Vaishnavi Oasis, Hyderabad",
-    phone: "+91 40 6682 2560",
-    hours: "11:30 AM – 11:00 PM",
-    rating: 4.0,
-    priceForTwo: "₹860",
-  },
-  {
-    city: "Gachibowli",
-    address: "DLF Cyber City, Gachibowli, Hyderabad",
-    phone: "+91 40 6682 2565",
-    hours: "12:00 PM – 11:00 PM",
-    rating: 3.9,
-    priceForTwo: "₹900",
-  },
-  {
-    city: "Bangalore",
-    address: "Koramangala, Bangalore, Karnataka",
-    phone: "+91 80 4567 8900",
-    hours: "12:00 PM – 11:00 PM",
-    rating: 4.0,
-    priceForTwo: "₹950",
-  },
-];
+const location = {
+  name: "Kritunga Padmarao Nagar",
+  address: "Padmarao Nagar, Secunderabad, Hyderabad, Telangana",
+  phone: "+91 40 6682 2552",
+  hours: "12:00 PM – 11:00 PM",
+  priceForTwo: "₹900",
+  mapEmbed:
+    "https://www.google.com/maps?q=kritunga+padmarao+nagar&output=embed",
+};
 
 const LocationsSection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true });
 
   return (
-    <section id="locations" className="py-24 lg:py-32 bg-background">
+    <section id="locations" className="py-24 lg:py-32 bg-kritunga-beige">
       <div className="container mx-auto px-4 lg:px-8">
+
+        {/* Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <p className="font-heading text-lg tracking-[0.3em] uppercase text-accent mb-3">Find Us</p>
-          <h2 className="font-display text-3xl lg:text-5xl font-bold text-foreground mb-4">Our Locations</h2>
-          <div className="w-20 h-0.5 bg-accent mx-auto mb-4" />
-          <p className="font-body text-muted-foreground max-w-2xl mx-auto">
-            There's always a Kritunga near you. The biggest Telugu restaurant brand in the world — 
-            spread across Telangana, Andhra Pradesh, Karnataka, USA, and Australia.
+          <p className="tracking-[0.35em] uppercase text-accent mb-3">
+            Visit Us
+          </p>
+
+          <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+            Kritunga Padmarao Nagar
+          </h2>
+
+          <div className="w-20 h-[2px] bg-accent mx-auto mb-6" />
+
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Experience the authentic taste of Rayalaseema cuisine at our
+            Padmarao Nagar branch in Secunderabad. Enjoy bold flavors,
+            traditional recipes, and a premium dining atmosphere.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {locations.map((loc, i) => (
-            <motion.div
-              key={loc.city}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-card border border-border p-6 hover:shadow-[var(--shadow-card)] transition-all duration-300 group"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                  {loc.city}
-                </h3>
-                <div className="flex items-center gap-1 bg-accent/15 px-2 py-1 rounded-sm">
-                  <Star className="w-3.5 h-3.5 text-accent fill-accent" />
-                  <span className="font-body text-sm font-bold text-accent">{loc.rating}</span>
+        {/* Location Layout */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+          {/* Map */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            className="rounded-xl overflow-hidden shadow-xl border"
+          >
+            <iframe
+              src={location.mapEmbed}
+              width="100%"
+              height="420"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="border-0"
+            />
+          </motion.div>
+
+          {/* Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            className="bg-card border border-border rounded-xl p-10 shadow-lg"
+          >
+            <h3 className="text-2xl font-bold mb-6">
+              Restaurant Details
+            </h3>
+
+            <div className="space-y-5 text-muted-foreground">
+
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary mt-1" />
+                <div>
+                  <p className="font-semibold text-foreground">Address</p>
+                  <p>{location.address}</p>
                 </div>
               </div>
 
-              <div className="space-y-3 text-sm font-body text-muted-foreground">
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <span>{loc.address}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary shrink-0" />
-                  <span>{loc.hours}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-primary shrink-0" />
-                  <span>{loc.phone}</span>
+              <div className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-primary mt-1" />
+                <div>
+                  <p className="font-semibold text-foreground">Opening Hours</p>
+                  <p>{location.hours}</p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-                <span className="font-body text-xs text-muted-foreground tracking-wider uppercase">For Two</span>
-                <span className="font-display text-lg font-bold text-primary">{loc.priceForTwo}</span>
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-primary mt-1" />
+                <div>
+                  <p className="font-semibold text-foreground">Contact</p>
+                  <p>{location.phone}</p>
+                </div>
               </div>
-            </motion.div>
-          ))}
+
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 mt-8">
+
+              <a
+                href={`tel:${location.phone}`}
+                className="bg-primary text-white px-6 py-3 rounded-md text-sm font-semibold hover:opacity-90"
+              >
+                Call Now
+              </a>
+
+              <a
+                href={`https://www.google.com/maps/search/${location.name}`}
+                target="_blank"
+                className="border border-border px-6 py-3 rounded-md text-sm flex items-center gap-2 hover:bg-muted"
+              >
+                <Navigation className="w-4 h-4" />
+                Get Directions
+              </a>
+
+            </div>
+
+            {/* Price */}
+            <div className="mt-8 pt-6 border-t flex justify-between items-center">
+              <span className="text-sm uppercase text-muted-foreground">
+                Average Cost
+              </span>
+
+              <span className="text-2xl font-bold text-primary">
+                {location.priceForTwo}
+                <span className="text-sm ml-1 text-muted-foreground">
+                  for two
+                </span>
+              </span>
+            </div>
+
+          </motion.div>
+
         </div>
+
       </div>
     </section>
   );

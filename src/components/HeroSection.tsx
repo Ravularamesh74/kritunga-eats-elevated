@@ -51,12 +51,12 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 1 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a
-            href="#menu"
+          <Link
+            to="/menu"
             className="bg-primary text-primary-foreground px-8 py-3.5 font-body text-sm font-bold tracking-[0.2em] uppercase hover:bg-maroon-dark transition-colors"
           >
             Explore Menu
-          </a>
+          </Link>
           <a
             href="#locations"
             className="border-2 border-gold-light text-gold-light px-8 py-3.5 font-body text-sm font-bold tracking-[0.2em] uppercase hover:bg-gold-light/10 transition-colors"

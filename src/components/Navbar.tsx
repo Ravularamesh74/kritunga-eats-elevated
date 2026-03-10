@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/kritunga-logo.png";
 
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Menu", href: "#menu" },
+  { label: "Menu", href: "/menu", isRoute: true },
   { label: "Locations", href: "#locations" },
   { label: "Contact", href: "#contact" },
 ];
@@ -41,17 +42,29 @@ const Navbar = () => {
 
           {/* Desktop */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
-                  scrolled ? "text-foreground" : "text-primary-foreground"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              (link as any).isRoute ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
+                    scrolled ? "text-foreground" : "text-primary-foreground"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
+                    scrolled ? "text-foreground" : "text-primary-foreground"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <a
               href="tel:+919908093970"
               className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-sm font-body text-sm font-bold tracking-wider hover:bg-maroon-dark transition-colors"
@@ -81,16 +94,27 @@ const Navbar = () => {
             className="lg:hidden bg-background/98 backdrop-blur-md border-t border-border"
           >
             <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) =>
+                (link as any).isRoute ? (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
               <a
                 href="tel:+919908093970"
                 className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-5 py-3 rounded-sm font-body text-sm font-bold tracking-wider"

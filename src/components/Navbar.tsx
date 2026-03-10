@@ -94,16 +94,27 @@ const Navbar = () => {
             className="lg:hidden bg-background/98 backdrop-blur-md border-t border-border"
           >
             <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) =>
+                (link as any).isRoute ? (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="font-heading text-lg text-foreground hover:text-accent transition-colors py-2"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
               <a
                 href="tel:+919908093970"
                 className="flex items-center justify-center gap-2 bg-primary text-primary-foreground px-5 py-3 rounded-sm font-body text-sm font-bold tracking-wider"

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/kritunga-logo.png";
 
 const navLinks = [
@@ -19,6 +19,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
   const [progress, setProgress] = useState(0);
+
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const isNavSolid = scrolled || !isHome;
 
   useEffect(() => {
 
@@ -63,9 +67,9 @@ export default function Navbar() {
         initial={{ y: -80 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? "bg-background/70 backdrop-blur-xl shadow-2xl border-b border-white/10"
-          : "bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isNavSolid
+            ? "bg-background/90 backdrop-blur-xl shadow-2xl border-b border-border/50"
+            : "bg-transparent"
           }`}
       >
 
@@ -73,10 +77,13 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
 
             {/* Logo */}
-            <motion.a
-              href="#home"
+            <Link
+              to="/"
+              onClick={() => {
+                if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 inline-block"
             >
               <img
                 src={logo}
@@ -85,7 +92,7 @@ export default function Navbar() {
               />
 
               <div
-                className={`transition-colors ${scrolled ? "text-primary" : "text-white"
+                className={`transition-colors ${isNavSolid ? "text-primary" : "text-white"
                   }`}
               >
                 <span className="font-display text-xl font-bold">
@@ -96,7 +103,7 @@ export default function Navbar() {
                   Rayalaseema Cuisine
                 </p>
               </div>
-            </motion.a>
+            </Link>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center gap-10 relative">
@@ -106,35 +113,46 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     to={link.href}
-                    className="relative text-lg font-medium hover:text-primary transition"
+                    className={`relative text-lg font-medium hover:text-primary transition ${location.pathname === link.href ? "text-primary" : (isNavSolid ? "text-foreground" : "text-white")}`}
                   >
                     {link.label}
                   </Link>
                 ) : (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className={`relative text-lg font-medium transition ${active === link.href.replace("#", "")
-                      ? "text-primary"
-                      : "hover:text-primary"
-                      }`}
-                  >
-                    {link.label}
+                  isHome ? (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      className={`relative text-lg font-medium transition ${active === link.href.replace("#", "")
+                          ? "text-primary"
+                          : (isNavSolid ? "text-foreground hover:text-primary" : "text-white hover:text-white/80")
+                        }`}
+                    >
+                      {link.label}
 
-                    {/* animated underline */}
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute left-0 -bottom-1 h-[2px] bg-primary"
-                      initial={{ width: 0 }}
-                      animate={{
-                        width:
-                          active === link.href.replace("#", "")
-                            ? "100%"
-                            : "0%",
-                      }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
+                      {/* animated underline */}
+                      <motion.span
+                        layoutId="nav-underline-desktop"
+                        className="absolute left-0 -bottom-1 h-[2px] bg-primary"
+                        initial={{ width: 0 }}
+                        animate={{
+                          width:
+                            active === link.href.replace("#", "")
+                              ? "100%"
+                              : "0%",
+                        }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.href}
+                      to={`/${link.href}`}
+                      className={`relative text-lg font-medium transition ${isNavSolid ? "text-foreground hover:text-primary" : "text-white hover:text-white/80"
+                        }`}
+                    >
+                      {link.label}
+                    </Link>
+                  )
                 )
               )}
 
@@ -184,19 +202,30 @@ export default function Navbar() {
                       key={link.href}
                       to={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="hover:text-primary"
+                      className={`hover:text-primary ${location.pathname === link.href ? "text-primary font-bold" : "text-foreground"}`}
                     >
                       {link.label}
                     </Link>
                   ) : (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="hover:text-primary"
-                    >
-                      {link.label}
-                    </a>
+                    isHome ? (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`hover:text-primary ${active === link.href.replace("#", "") ? "text-primary font-bold" : "text-foreground"}`}
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        to={`/${link.href}`}
+                        onClick={() => setIsOpen(false)}
+                        className="hover:text-primary text-foreground"
+                      >
+                        {link.label}
+                      </Link>
+                    )
                   )
                 )}
 

@@ -64,6 +64,12 @@ export default {
           DEFAULT: "hsl(var(--cream))",
           dark: "hsl(var(--cream-dark))",
         },
+        kritunga: {
+          red: "hsl(var(--primary))",
+          beige: "hsl(var(--background))",
+          terracotta: "hsl(var(--accent))",
+          darkGray: "hsl(var(--foreground))",
+        },
         "warm-brown": "hsl(var(--warm-brown))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

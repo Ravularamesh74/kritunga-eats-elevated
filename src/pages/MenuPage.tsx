@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Flame, Star, Search, ChevronDown } from "lucide-react";
 import logo from "@/assets/kritunga-logo.png";
 import { fullMenu } from "@/data/menuData";
+import Footer from "@/components/Footer";
 
 const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState(fullMenu[0].id);
@@ -215,6 +216,7 @@ const MenuPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

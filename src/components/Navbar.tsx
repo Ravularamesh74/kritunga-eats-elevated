@@ -42,17 +42,29 @@ const Navbar = () => {
 
           {/* Desktop */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
-                  scrolled ? "text-foreground" : "text-primary-foreground"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              (link as any).isRoute ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
+                    scrolled ? "text-foreground" : "text-primary-foreground"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`font-heading text-lg font-medium tracking-wide transition-colors hover:text-accent ${
+                    scrolled ? "text-foreground" : "text-primary-foreground"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <a
               href="tel:+919908093970"
               className="flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-sm font-body text-sm font-bold tracking-wider hover:bg-maroon-dark transition-colors"

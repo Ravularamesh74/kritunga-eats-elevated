@@ -1,30 +1,71 @@
-# Kritunga Eats Elevated
+# 🍽️ Kritunga Eats Elevated
 
-Premium dining experience.
+A modern restaurant-inspired web application showcasing the rich flavors of **Kritunga (Rayalaseema) cuisine** with a clean UI, responsive design, and smooth user experience.
 
-## Project Technologies
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
+## 🚀 Live Demo
+🔗 https://kritunga-eats-elevated.vercel.app/
+
+---
+
+## 📌 Project Overview
+
+**Kritunga Eats Elevated** is a frontend web application designed to replicate a real-world restaurant experience. It highlights traditional food culture with a modern digital interface.
+
+This project focuses on:
+- Elegant UI/UX design
+- Fast performance
+- Mobile-first responsiveness
+- Real-world restaurant layout simulation
+
+---
+
+## ✨ Features
+
+- 🍗 Interactive Food Menu UI
+- 🖼️ Hero Section with Branding
+- 📱 Fully Responsive Design
+- ⚡ Fast and Optimized Performance
+- 🎨 Clean and Modern Layout
+- 🧭 Easy Navigation
+- 🔍 Category-based food display
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React.js
+- TypeScript / JavaScript
+
+### Styling
 - Tailwind CSS
+- Responsive Grid & Flexbox
 
-## Getting Started
+### Deployment
+- Vercel
 
-1. Install dependencies:
-   ```sh
-   npm install
-   ```
+---
 
-2. Start the development server:
-   ```sh
-   npm run dev
-   ```
+## 📂 Folder Structure
 
-## Deployment
+kritunga-eats-elevated/
+│── public/
+│── src/
+│   ├── components/
+│   ├── pages/
+│   ├── assets/
+│   ├── styles/
+│   └── App.tsx
+│── package.json
+│── README.md
 
-Build the project for production:
-```sh
-npm run build
-```
+---
+
+## ⚙️ Installation & Setup
+
+Clone the repository:
+```bash
+git clone https://github.com/your-username/kritunga-eats-elevated.git
+cd kritunga-eats-elevated

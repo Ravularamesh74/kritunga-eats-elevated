@@ -16,7 +16,8 @@ const navLinks = [
 export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = 
+  useState(false);
   const [active, setActive] = useState("home");
   const [progress, setProgress] = useState(0);
 
@@ -68,8 +69,8 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isNavSolid
-            ? "bg-background/90 backdrop-blur-xl shadow-2xl border-b border-border/50"
-            : "bg-transparent"
+          ? "bg-background/90 backdrop-blur-xl shadow-2xl border-b border-border/50"
+          : "bg-transparent"
           }`}
       >
 
@@ -82,27 +83,31 @@ export default function Navbar() {
               onClick={() => {
                 if (isHome) window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              whileHover={{ scale: 1.05 }}
-              className="flex items-center gap-3 inline-block"
+              className="inline-block"
             >
-              <img
-                src={logo}
-                alt="Kritunga"
-                className="h-14 w-14 object-contain"
-              />
-
-              <div
-                className={`transition-colors ${isNavSolid ? "text-primary" : "text-white"
-                  }`}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-3"
               >
-                <span className="font-display text-xl font-bold">
-                  KRITUNGA
-                </span>
+                <img
+                  src={logo}
+                  alt="Kritunga"
+                  className="h-14 w-14 object-contain"
+                />
 
-                <p className="text-[10px] tracking-[0.3em] uppercase opacity-70">
-                  Rayalaseema Cuisine
-                </p>
-              </div>
+                <div
+                  className={`transition-colors ${isNavSolid ? "text-primary" : "text-white"
+                    }`}
+                >
+                  <span className="font-display text-xl font-bold">
+                    KRITUNGA
+                  </span>
+
+                  <p className="text-[10px] tracking-[0.3em] uppercase opacity-70">
+                    Rayalaseema Cuisine
+                  </p>
+                </div>
+              </motion.div>
             </Link>
 
             {/* Desktop Menu */}
@@ -123,8 +128,8 @@ export default function Navbar() {
                       key={link.href}
                       href={link.href}
                       className={`relative text-lg font-medium transition ${active === link.href.replace("#", "")
-                          ? "text-primary"
-                          : (isNavSolid ? "text-foreground hover:text-primary" : "text-white hover:text-white/80")
+                        ? "text-primary"
+                        : (isNavSolid ? "text-foreground hover:text-primary" : "text-white hover:text-white/80")
                         }`}
                     >
                       {link.label}
